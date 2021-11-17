@@ -9,6 +9,9 @@ class Calculator(var valueOne: Double = 0.0, var valueTwo: Double = 0.0, var ope
         when (operationID){
 
             1 -> result = (valueOne + valueTwo).toInt()
+
+
+
         }
     }
 
