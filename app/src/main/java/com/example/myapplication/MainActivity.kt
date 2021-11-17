@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
-import android.widget.EditText
 import android.widget.TextView
 import java.math.RoundingMode
 import java.text.DecimalFormat
@@ -15,6 +14,11 @@ class MainActivity : AppCompatActivity() {
 
     var resultString = ""
     var operationString = ""
+    var buffer = ""
+    val operationArray = mutableListOf<String>()
+
+    var isSymbol = false
+    var erase = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,7 +29,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    fun setFieldsAndListeners(){
+    private fun setFieldsAndListeners() {
 
         val opViewer = findViewById<TextView>(R.id.operation_view)
 
@@ -91,8 +95,6 @@ class MainActivity : AppCompatActivity() {
 
             buttonAction(0, opViewer)
         }
-
-
         plusBtn.setOnClickListener {
 
             buttonAction(10, opViewer)
@@ -119,6 +121,8 @@ class MainActivity : AppCompatActivity() {
 
         resultBtn.setOnClickListener {
 
+            operationArray.add(buffer)
+            buffer = ""
             var obj = sendToCalc()
             val df = DecimalFormat("#.##")
             df.roundingMode = RoundingMode.CEILING
@@ -128,9 +132,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun buttonAction(symbId: Int, view: TextView){
+    private fun buttonAction(symbId: Int, view: TextView) {
 
-        when(symbId){
+        when (symbId) {
 
             0 -> stringMaker("0", view)
             1 -> stringMaker("1", view)
@@ -142,37 +146,78 @@ class MainActivity : AppCompatActivity() {
             7 -> stringMaker("7", view)
             8 -> stringMaker("8", view)
             9 -> stringMaker("9", view)
-            10 -> stringMaker("+", view)
-            11 -> stringMaker("-", view)
-            12 -> stringMaker("*", view)
-            13 -> stringMaker("/", view)
-            14 -> stringMaker(resultString, view)
-            15 -> stringMaker("D", view)
+            10 -> {
+                changeBool(0)
+                stringMaker("+", view)
+            }
+            11 -> {
+                changeBool(0)
+                stringMaker("-", view)
+            }
+            12 -> {
+                changeBool(0)
+                stringMaker ("*", view)
+            }
+            13 -> {
+                changeBool(0)
+                stringMaker("/", view)
+            }
+            14 -> {
+                changeBool(0)
+                stringMaker(resultString, view)
+            }
+            15 -> {
+                changeBool(1)
+                erase(view)
+            }
+
         }
 
     }
 
-    fun sendToCalc(): Calculator {
+    private fun sendToCalc(): Calculator {
 
-        return Calculator(operationString)
+        return Calculator(operationArray)
     }
 
-    fun stringMaker(temp: String, view: TextView) {
+    private fun changeBool(id: Int) {
 
-        operationString = if (temp == "D"){
+        if (id == 0) {
+            isSymbol = !isSymbol
+        } else erase = !erase
+    }
 
-            operationString.dropLast(1)
+    private fun erase(view: TextView) {
 
-        }else{
-
-            "$operationString$temp"
-        }
-
-        Log.d(TAG, "stringMaker: $operationString")
+        operationString = operationString.dropLast(1)
+        changeBool(1)
         updateFields(view)
     }
 
-    fun updateFields(view: TextView) {
+    private fun stringMaker(temp: String, view: TextView) {
+
+
+        operationString = when {
+
+            isSymbol -> {
+
+                changeBool(0)
+                operationArray.add(buffer)
+                buffer = ""
+                operationArray.add(temp)
+                "$operationString$temp"
+
+            }
+            else -> {
+                 buffer = "$buffer$temp"
+                "$operationString$temp"
+            }
+        }
+
+        updateFields(view)
+    }
+
+    private fun updateFields(view: TextView) {
 
         view.text = operationString
 

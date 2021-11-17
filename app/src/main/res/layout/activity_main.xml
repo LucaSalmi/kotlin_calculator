@@ -6,113 +6,111 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/operation_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        android:background="@drawable/box"
-        android:textAlignment="center"></TextView>
+<com.google.android.material.textview.MaterialTextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/operation_view"
+    android:layout_alignParentTop="true"
+    android:layout_marginLeft="5dp"
+    android:layout_marginTop="25dp"
+    android:layout_marginRight="5dp"
+    android:layout_marginBottom="20dp"
+    android:textSize="40sp"
+    android:textAlignment="textEnd"
+    android:background="@drawable/box"
+    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-    <EditText
-        android:id="@+id/input_field"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/operation_view"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="25dp"
-        android:background="@drawable/box"
-        android:inputType="numberDecimal"></EditText>
+</com.google.android.material.textview.MaterialTextView>
+
 
     <GridLayout
         android:id="@+id/numbers_table"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/input_field"
+        android:layout_marginLeft="5dp"
+        android:layout_below="@id/operation_view"
         android:columnCount="3"
         android:rowCount="4">
 
         <Button
             android:id="@+id/num_1"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="5dp"
             android:layout_marginBottom="5dp"
-            android:background="@drawable/round_btn"
             android:text="1"></Button>
 
         <Button
             android:id="@+id/num_2"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="5dp"
             android:layout_marginBottom="5dp"
-            android:background="@drawable/round_btn"
             android:text="2"></Button>
 
         <Button
             android:id="@+id/num_3"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="5dp"
             android:layout_marginBottom="5dp"
-            android:background="@drawable/round_btn"
             android:text="3"></Button>
 
         <Button
             android:id="@+id/num_4"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="5dp"
             android:layout_marginBottom="5dp"
-            android:background="@drawable/round_btn"
             android:text="4"></Button>
 
         <Button
             android:id="@+id/num_5"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="5dp"
             android:layout_marginBottom="5dp"
-            android:background="@drawable/round_btn"
             android:text="5"></Button>
 
         <Button
             android:id="@+id/num_6"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="5dp"
             android:layout_marginBottom="5dp"
-            android:background="@drawable/round_btn"
             android:text="6"></Button>
 
         <Button
             android:id="@+id/num_7"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="5dp"
             android:layout_marginBottom="5dp"
-            android:background="@drawable/round_btn"
             android:text="7"></Button>
 
         <Button
             android:id="@+id/num_8"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="5dp"
             android:layout_marginBottom="5dp"
-            android:background="@drawable/round_btn"
             android:text="8"></Button>
 
         <Button
             android:id="@+id/num_9"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="5dp"
             android:layout_marginBottom="5dp"
-            android:background="@drawable/round_btn"
             android:text="9"></Button>
 
         <Button
@@ -121,17 +119,16 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="5dp"
             android:layout_marginBottom="5dp"
-            android:background="@drawable/round_btn"
             android:text="CE"></Button>
 
         <Button
             android:id="@+id/num_0"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginRight="5dp"
             android:layout_marginBottom="5dp"
-            android:background="@drawable/round_btn"
             android:text="0"></Button>
 
         <Button
@@ -140,7 +137,6 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="5dp"
             android:layout_marginBottom="5dp"
-            android:background="@drawable/round_btn"
             android:text="erase"></Button>
 
     </GridLayout>
@@ -149,7 +145,7 @@
         android:id="@+id/first_op_row"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/input_field"
+        android:layout_below="@id/operation_view"
         android:layout_alignParentRight="true"
         android:layout_marginRight="10dp"
         android:orientation="vertical"
@@ -161,7 +157,6 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
             android:layout_weight="1"
-            android:background="@drawable/round_btn"
             android:text="+"></Button>
 
         <Button
@@ -170,7 +165,6 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
             android:layout_weight="1"
-            android:background="@drawable/round_btn"
             android:text="-"></Button>
 
         <Button
@@ -179,7 +173,6 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
             android:layout_weight="1"
-            android:background="@drawable/round_btn"
             android:text="*"></Button>
 
         <Button
@@ -187,19 +180,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/round_btn"
             android:text="/"></Button>
 
     </LinearLayout>
 
     <Button
         android:id="@+id/result_btn"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/numbers_table"
         android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:layout_marginTop="5dp"
-        android:background="@drawable/round_btn"
         android:text="="></Button>
 
 
