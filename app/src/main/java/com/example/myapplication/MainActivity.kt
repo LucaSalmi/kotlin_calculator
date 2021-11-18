@@ -6,19 +6,20 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.TextView
-import java.math.RoundingMode
-import java.text.DecimalFormat
 
 class MainActivity : AppCompatActivity() {
 
 
     var resultString = ""
     var operationString = ""
+    var analysisString = ""
     var buffer = ""
-    val operationArray = mutableListOf<String>()
+    val numbersArray = mutableListOf<Int>()
+    val symbolArray = mutableListOf<String>()
 
     var isSymbol = false
     var erase = false
+    var isResult = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -113,6 +114,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         clearBtn.setOnClickListener {
+
             operationString = ""
             updateFields(opViewer)
         }
@@ -121,15 +123,44 @@ class MainActivity : AppCompatActivity() {
 
         resultBtn.setOnClickListener {
 
-            operationArray.add(buffer)
-            buffer = ""
-            var obj = sendToCalc()
-            val df = DecimalFormat("#.##")
-            df.roundingMode = RoundingMode.CEILING
-            resultString = df.format(obj.result)
-            updateFields(opViewer)
-
+            resultBtnAction(opViewer)
         }
+    }
+
+    private fun resultBtnAction(view: TextView){
+
+        if (buffer != ""){
+
+            "$operationString$buffer?"
+            buffer = ""
+
+        }else view.error = "not calculable"
+
+        unmakeString()
+
+        if (checkIfEmpty()){
+
+            var obj = sendToCalc()
+            resultString = obj.operationArray[0].toString()
+            buttonAction(14, view)
+            updateFields(view)
+            arrayCleaner(obj)
+
+        }else view.error = "not calculable"
+    }
+
+    private fun checkIfEmpty(): Boolean {
+
+        return numbersArray.size >= 2
+    }
+
+    private fun arrayCleaner(obj: Calculator){
+
+        numbersArray.clear()
+        symbolArray.clear()
+        obj.operationArray.clear()
+        obj.symbolArray.clear()
+
     }
 
     private fun buttonAction(symbId: Int, view: TextView) {
@@ -163,7 +194,7 @@ class MainActivity : AppCompatActivity() {
                 stringMaker("/", view)
             }
             14 -> {
-                changeBool(0)
+                changeBool(2)
                 stringMaker(resultString, view)
             }
             15 -> {
@@ -177,14 +208,16 @@ class MainActivity : AppCompatActivity() {
 
     private fun sendToCalc(): Calculator {
 
-        return Calculator(operationArray)
+        return Calculator(numbersArray, symbolArray)
     }
 
     private fun changeBool(id: Int) {
 
-        if (id == 0) {
-            isSymbol = !isSymbol
-        } else erase = !erase
+        when (id) {
+            0 -> isSymbol = !isSymbol
+            1 -> erase = !erase
+            2 -> isResult = !isResult
+        }
     }
 
     private fun erase(view: TextView) {
@@ -202,13 +235,16 @@ class MainActivity : AppCompatActivity() {
             isSymbol -> {
 
                 changeBool(0)
-                operationArray.add(buffer)
                 buffer = ""
-                operationArray.add(temp)
                 "$operationString$temp"
 
             }
-            else -> {
+            isResult -> {
+
+                changeBool(2)
+                temp
+
+            }else -> {
                  buffer = "$buffer$temp"
                 "$operationString$temp"
             }
@@ -220,6 +256,55 @@ class MainActivity : AppCompatActivity() {
     private fun updateFields(view: TextView) {
 
         view.text = operationString
+
+    }
+
+    private fun unmakeString(){
+
+        var counter = 0
+        analysisString = operationString
+
+        for(c in analysisString){
+
+            when (c){
+
+                '+' -> {
+                    symbolArray.add("+")
+                }
+                '-' -> {
+                    symbolArray.add("-")
+                }
+                '*' -> {
+                    symbolArray.add("*")
+                }
+                '/' -> {
+                    symbolArray.add("/")
+                }
+            }
+        }
+
+        analysisString = analysisString.replace('+', '?')
+        analysisString = analysisString.replace('-', '?')
+        analysisString = analysisString.replace('*', '?')
+        analysisString = analysisString.replace('/', '?')
+        analysisString = "$analysisString?"
+
+        for(c in analysisString){
+
+            if (c == '?'){counter++}
+        }
+
+        while (counter > 0){
+
+            numbersArray.add(analysisString.substring(0, analysisString.indexOf('?')).toInt())
+            analysisString = analysisString.removeRange(0, (analysisString.indexOf('?')+1))
+            counter--
+
+        }
+
+        Log.d(TAG, "unmakeString: $analysisString")
+        Log.d(TAG, "unmakeString2: $symbolArray")
+        Log.d(TAG, "unmakeString3: $numbersArray")
 
     }
 }
