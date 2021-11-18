@@ -134,7 +134,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun resultBtnAction(view: TextView){
 
-        if (operationString.endsWith('+') || operationString.endsWith('-') || operationString.endsWith('*') || operationString.endsWith('/')){
+        if (endsWithSymb()){
 
             Toast.makeText(this, "not calculable", Toast.LENGTH_SHORT).show()
             return
@@ -178,6 +178,11 @@ class MainActivity : AppCompatActivity() {
         numbersArray.clear()
         symbolArray.clear()
 
+    }
+
+    private fun endsWithSymb(): Boolean{
+
+        return (operationString.endsWith('+') || operationString.endsWith('-') || operationString.endsWith('*') || operationString.endsWith('/'))
     }
 
     private fun buttonAction(symbId: Int, view: TextView) {
@@ -248,7 +253,6 @@ class MainActivity : AppCompatActivity() {
 
         resultsArray.add("$operationString=$temp")
 
-
     }
 
     private fun stringMaker(temp: String, view: TextView) {
@@ -259,6 +263,12 @@ class MainActivity : AppCompatActivity() {
             isSymbol -> {
 
                 changeBool(0)
+
+                if (endsWithSymb()){
+
+                    operationString = operationString.dropLast(1)
+
+                }
                 "$operationString$temp"
 
             }
@@ -325,12 +335,5 @@ class MainActivity : AppCompatActivity() {
             counter--
 
         }
-
-
-
-        Log.d(TAG, "unmakeString: $analysisString")
-        Log.d(TAG, "unmakeString2: $symbolArray")
-        Log.d(TAG, "unmakeString3: $numbersArray")
-
     }
 }
