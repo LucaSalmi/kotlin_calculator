@@ -4,8 +4,7 @@ import android.content.ContentValues.TAG
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
-import android.widget.TextView
+import android.widget.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -16,6 +15,7 @@ class MainActivity : AppCompatActivity() {
     var buffer = ""
     val numbersArray = mutableListOf<Int>()
     val symbolArray = mutableListOf<String>()
+    val resultsArray = mutableListOf<String>()
 
     var isSymbol = false
     var erase = false
@@ -54,6 +54,10 @@ class MainActivity : AppCompatActivity() {
         val btnNine = findViewById<Button>(R.id.num_9)
         val btnZero = findViewById<Button>(R.id.num_0)
 
+        val opMemory = findViewById<ListView>(R.id.memory_layout)
+
+        val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, resultsArray)
+        opMemory.adapter = adapter
 
 
         btnOne.setOnClickListener {
@@ -124,29 +128,44 @@ class MainActivity : AppCompatActivity() {
         resultBtn.setOnClickListener {
 
             resultBtnAction(opViewer)
+            adapter.notifyDataSetChanged()
         }
     }
 
     private fun resultBtnAction(view: TextView){
 
-        if (buffer != ""){
+        if (operationString.endsWith('+') || operationString.endsWith('-') || operationString.endsWith('*') || operationString.endsWith('/')){
 
-            "$operationString$buffer?"
-            buffer = ""
+            Toast.makeText(this, "not calculable", Toast.LENGTH_SHORT).show()
+            return
 
-        }else view.error = "not calculable"
+        }else "$operationString?"
 
         unmakeString()
+
+        if (checkForZeroes()){
+
+            Toast.makeText(this, "can't operate with zero", Toast.LENGTH_SHORT).show()
+            arrayCleaner()
+            return
+
+        }
 
         if (checkIfEmpty()){
 
             var obj = sendToCalc()
-            resultString = obj.operationArray[0].toString()
+            resultString = obj.result
             buttonAction(14, view)
             updateFields(view)
-            arrayCleaner(obj)
+            arrayCleaner()
 
-        }else view.error = "not calculable"
+        }else Toast.makeText(this, "not calculable", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun checkForZeroes(): Boolean {
+
+        return numbersArray.contains(0)
+
     }
 
     private fun checkIfEmpty(): Boolean {
@@ -154,12 +173,10 @@ class MainActivity : AppCompatActivity() {
         return numbersArray.size >= 2
     }
 
-    private fun arrayCleaner(obj: Calculator){
+    private fun arrayCleaner(){
 
         numbersArray.clear()
         symbolArray.clear()
-        obj.operationArray.clear()
-        obj.symbolArray.clear()
 
     }
 
@@ -227,6 +244,13 @@ class MainActivity : AppCompatActivity() {
         updateFields(view)
     }
 
+    private fun addToMemory(temp: String){
+
+        resultsArray.add("$operationString=$temp")
+
+
+    }
+
     private fun stringMaker(temp: String, view: TextView) {
 
 
@@ -235,17 +259,17 @@ class MainActivity : AppCompatActivity() {
             isSymbol -> {
 
                 changeBool(0)
-                buffer = ""
                 "$operationString$temp"
 
             }
             isResult -> {
 
                 changeBool(2)
+                addToMemory(temp)
                 temp
 
             }else -> {
-                 buffer = "$buffer$temp"
+
                 "$operationString$temp"
             }
         }
@@ -301,6 +325,8 @@ class MainActivity : AppCompatActivity() {
             counter--
 
         }
+
+
 
         Log.d(TAG, "unmakeString: $analysisString")
         Log.d(TAG, "unmakeString2: $symbolArray")

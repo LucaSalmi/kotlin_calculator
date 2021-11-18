@@ -8,7 +8,7 @@ import java.util.*
 
 class Calculator(val operationArray: MutableList<Int>, val symbolArray: MutableList<String>) {
 
-    var result = 0
+    var result = ""
 
     init {
 
@@ -16,14 +16,14 @@ class Calculator(val operationArray: MutableList<Int>, val symbolArray: MutableL
 
     }
 
-    private fun stringTranslate() {
+     private fun stringTranslate() {
 
         var temp = 0
         var value1 = 0
         var value2 = 0
         var opPos = 0
 
-        while(operationArray.contains(0)){
+         while(operationArray.contains(0)){
 
             operationArray.removeAt(operationArray.indexOf(0))
         }
@@ -80,7 +80,9 @@ class Calculator(val operationArray: MutableList<Int>, val symbolArray: MutableL
             Log.d(TAG, "subtractionPassage: $operationArray")
         }
 
+         result = operationArray[0].toString()
         Log.d(TAG, "stringTranslate: $operationArray")
+         Log.d(TAG, "stringTranslate: $result")
 
 
 
