@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 
 class CustomAdapter (private val mList: List<ItemsViewModel>) : RecyclerView.Adapter<CustomAdapter.ViewHolder>() {
@@ -24,12 +25,12 @@ class CustomAdapter (private val mList: List<ItemsViewModel>) : RecyclerView.Ada
         val ItemsViewModel = mList[position]
 
         // sets the image to the imageview from our itemHolder class
-        //holder.imageView.setImageResource(ItemsViewModel.image)
+          //holder.imageView.setImageResource(ItemsViewModel.image)
 
         // sets the text to the textview from our itemHolder class
         holder.textView.text = ItemsViewModel.text
-
     }
+
 
     // return the number of the items in the list
     override fun getItemCount(): Int {
@@ -38,6 +39,11 @@ class CustomAdapter (private val mList: List<ItemsViewModel>) : RecyclerView.Ada
 
     // Holds the views for adding it to image and text
     class ViewHolder(ItemView: View) : RecyclerView.ViewHolder(ItemView) {
+
         val textView: TextView = itemView.findViewById(R.id.textView)
+
     }
+
+
+
 }

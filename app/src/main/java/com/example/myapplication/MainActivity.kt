@@ -57,7 +57,6 @@ class MainActivity : AppCompatActivity() {
 
         val opMemory = findViewById<RecyclerView>(R.id.memory_layout)
 
-
         opMemory.layoutManager = LinearLayoutManager(this)
         val adapter = CustomAdapter(data)
         opMemory.adapter = adapter
