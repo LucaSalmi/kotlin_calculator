@@ -194,12 +194,13 @@
         android:layout_marginRight="15dp"
         android:text="="></Button>
 
-    <ListView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/memory_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/result_btn"
-        android:layout_marginTop="15dp"></ListView>
+        android:layout_marginTop="15dp"
+        ></androidx.recyclerview.widget.RecyclerView>
 
 
 </RelativeLayout>

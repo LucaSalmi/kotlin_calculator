@@ -54,6 +54,19 @@ class Calculator(val operationArray: MutableList<Int>, val symbolArray: MutableL
             Log.d(TAG, "divisionPassage: $operationArray")
         }
 
+         while (symbolArray.contains("-")){
+
+             opPos = symbolArray.indexOf("-")
+             value1 = operationArray[opPos]
+             value2 = operationArray[opPos+1]
+             temp = value1-value2
+             symbolArray.removeAt(opPos)
+             operationArray.removeAt(opPos+1)
+             operationArray.removeAt(opPos)
+             operationArray.add(opPos, temp)
+             Log.d(TAG, "subtractionPassage: $operationArray")
+         }
+
         while (symbolArray.contains("+")){
 
             opPos = symbolArray.indexOf("+")
@@ -65,19 +78,6 @@ class Calculator(val operationArray: MutableList<Int>, val symbolArray: MutableL
             operationArray.removeAt(opPos)
             operationArray.add(opPos, temp)
             Log.d(TAG, "sumPassage: $operationArray")
-        }
-
-        while (symbolArray.contains("-")){
-
-            opPos = symbolArray.indexOf("-")
-            value1 = operationArray[opPos]
-            value2 = operationArray[opPos+1]
-            temp = value1-value2
-            symbolArray.removeAt(opPos)
-            operationArray.removeAt(opPos+1)
-            operationArray.removeAt(opPos)
-            operationArray.add(opPos, temp)
-            Log.d(TAG, "subtractionPassage: $operationArray")
         }
 
          result = operationArray[0].toString()

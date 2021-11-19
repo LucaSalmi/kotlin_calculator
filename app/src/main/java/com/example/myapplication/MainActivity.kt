@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.*
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 class MainActivity : AppCompatActivity() {
 
@@ -15,8 +17,7 @@ class MainActivity : AppCompatActivity() {
     var buffer = ""
     val numbersArray = mutableListOf<Int>()
     val symbolArray = mutableListOf<String>()
-    val resultsArray = mutableListOf<String>()
-
+    val data = ArrayList<ItemsViewModel>()
     var isSymbol = false
     var erase = false
     var isResult = false
@@ -54,9 +55,11 @@ class MainActivity : AppCompatActivity() {
         val btnNine = findViewById<Button>(R.id.num_9)
         val btnZero = findViewById<Button>(R.id.num_0)
 
-        val opMemory = findViewById<ListView>(R.id.memory_layout)
+        val opMemory = findViewById<RecyclerView>(R.id.memory_layout)
 
-        val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, resultsArray)
+
+        opMemory.layoutManager = LinearLayoutManager(this)
+        val adapter = CustomAdapter(data)
         opMemory.adapter = adapter
 
 
@@ -251,7 +254,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun addToMemory(temp: String){
 
-        resultsArray.add("$operationString=$temp")
+        data.add(ItemsViewModel ("$operationString=$temp"))
 
     }
 
