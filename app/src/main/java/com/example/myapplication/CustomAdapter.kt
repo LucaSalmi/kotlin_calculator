@@ -4,31 +4,31 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 
 class CustomAdapter (private val mList: List<ItemsViewModel>) : RecyclerView.Adapter<CustomAdapter.ViewHolder>() {
 
-    // create new views
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        // inflates the card_view_design view
-        // that is used to hold list item
+
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.card_view_layout, parent, false)
 
         return ViewHolder(view)
     }
 
-    // binds the list items to a view
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        val ItemsViewModel = mList[position]
+        val itemsViewModel = mList[position]
 
-        // sets the image to the imageview from our itemHolder class
-          //holder.imageView.setImageResource(ItemsViewModel.image)
+        holder.textView.text = itemsViewModel.text
 
-        // sets the text to the textview from our itemHolder class
-        holder.textView.text = ItemsViewModel.text
+        holder.itemView.setOnClickListener {
+            
+            StringNumberManager.restoreFromMemory(holder.textView.text.toString())
+
+        }
+
     }
 
 
@@ -41,6 +41,7 @@ class CustomAdapter (private val mList: List<ItemsViewModel>) : RecyclerView.Ada
     class ViewHolder(ItemView: View) : RecyclerView.ViewHolder(ItemView) {
 
         val textView: TextView = itemView.findViewById(R.id.textView)
+
 
     }
 

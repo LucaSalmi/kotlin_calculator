@@ -13,8 +13,6 @@ class MainActivity : AppCompatActivity() {
 
     var resultString = ""
     var operationString = ""
-    var analysisString = ""
-    var buffer = ""
     val numbersArray = mutableListOf<Int>()
     val symbolArray = mutableListOf<String>()
     val data = ArrayList<ItemsViewModel>()
@@ -60,6 +58,7 @@ class MainActivity : AppCompatActivity() {
         opMemory.layoutManager = LinearLayoutManager(this)
         val adapter = CustomAdapter(data)
         opMemory.adapter = adapter
+
 
 
         btnOne.setOnClickListener {
@@ -143,7 +142,8 @@ class MainActivity : AppCompatActivity() {
 
         }else "$operationString?"
 
-        unmakeString()
+
+        StringNumberManager.unmakeString(operationString, symbolArray, numbersArray)
 
         if (checkForZeroes()){
 
@@ -295,47 +295,4 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun unmakeString(){
-
-        var counter = 0
-        analysisString = operationString
-
-        for(c in analysisString){
-
-            when (c){
-
-                '+' -> {
-                    symbolArray.add("+")
-                }
-                '-' -> {
-                    symbolArray.add("-")
-                }
-                '*' -> {
-                    symbolArray.add("*")
-                }
-                '/' -> {
-                    symbolArray.add("/")
-                }
-            }
-        }
-
-        analysisString = analysisString.replace('+', '?')
-        analysisString = analysisString.replace('-', '?')
-        analysisString = analysisString.replace('*', '?')
-        analysisString = analysisString.replace('/', '?')
-        analysisString = "$analysisString?"
-
-        for(c in analysisString){
-
-            if (c == '?'){counter++}
-        }
-
-        while (counter > 0){
-
-            numbersArray.add(analysisString.substring(0, analysisString.indexOf('?')).toInt())
-            analysisString = analysisString.removeRange(0, (analysisString.indexOf('?')+1))
-            counter--
-
-        }
-    }
 }
