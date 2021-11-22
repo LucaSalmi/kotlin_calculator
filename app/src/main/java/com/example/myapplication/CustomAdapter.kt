@@ -49,12 +49,11 @@ class CustomAdapter(private val mList: List<ItemsViewModel>, var click: onClick)
         }
 
 
-
     }
 
-    interface onClick{
+    interface onClick {
 
-        fun onItemClick(operation: ItemsViewModel, position: Int){
+        fun onItemClick(operation: ItemsViewModel, position: Int) {
 
         }
     }

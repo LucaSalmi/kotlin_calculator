@@ -6,7 +6,11 @@ import com.example.myapplication.databinding.ActivityMainBinding
 
 object StringNumberManager {
 
-    fun unmakeString(operationString: String, symbolArray: MutableList<String>, numbersArray: MutableList<Int>) {
+    fun unmakeString(
+        operationString: String,
+        symbolArray: MutableList<String>,
+        numbersArray: MutableList<Int>
+    ) {
 
         var counter = 0
         var analysisString = operationString
@@ -55,7 +59,7 @@ object StringNumberManager {
 
     fun restoreFromMemory(a: String): String {
 
-        return a.substring(a.indexOf('=')+1, a.lastIndex+1)
+        return a.substring(a.indexOf('=') + 1, a.lastIndex + 1)
 
     }
 }

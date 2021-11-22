@@ -114,19 +114,19 @@ class MainActivity : AppCompatActivity(), CustomAdapter.onClick {
         }
     }
 
-    private fun resultBtnAction(){
+    private fun resultBtnAction() {
 
-        if (endsWithSymb()){
+        if (endsWithSymb()) {
 
             Toast.makeText(this, "not calculable", Toast.LENGTH_SHORT).show()
             return
 
-        }else "$operationString?"
+        } else "$operationString?"
 
 
         StringNumberManager.unmakeString(operationString, symbolArray, numbersArray)
 
-        if (checkForZeroes()){
+        if (checkForZeroes()) {
 
             Toast.makeText(this, "can't operate with zero", Toast.LENGTH_SHORT).show()
             arrayCleaner()
@@ -134,7 +134,7 @@ class MainActivity : AppCompatActivity(), CustomAdapter.onClick {
 
         }
 
-        if (checkIfEmpty()){
+        if (checkIfEmpty()) {
 
             var obj = sendToCalc()
             resultString = obj.result
@@ -142,7 +142,7 @@ class MainActivity : AppCompatActivity(), CustomAdapter.onClick {
             updateFields()
             arrayCleaner()
 
-        }else Toast.makeText(this, "not calculable", Toast.LENGTH_SHORT).show()
+        } else Toast.makeText(this, "not calculable", Toast.LENGTH_SHORT).show()
     }
 
     private fun checkForZeroes(): Boolean {
@@ -156,16 +156,18 @@ class MainActivity : AppCompatActivity(), CustomAdapter.onClick {
         return numbersArray.size >= 2
     }
 
-    private fun arrayCleaner(){
+    private fun arrayCleaner() {
 
         numbersArray.clear()
         symbolArray.clear()
 
     }
 
-    private fun endsWithSymb(): Boolean{
+    private fun endsWithSymb(): Boolean {
 
-        return (operationString.endsWith('+') || operationString.endsWith('-') || operationString.endsWith('*') || operationString.endsWith('/'))
+        return (operationString.endsWith('+') || operationString.endsWith('-') || operationString.endsWith(
+            '*'
+        ) || operationString.endsWith('/'))
     }
 
     private fun buttonAction(symbId: Int) {
@@ -192,7 +194,7 @@ class MainActivity : AppCompatActivity(), CustomAdapter.onClick {
             }
             12 -> {
                 changeBool(0)
-                stringMaker ("*")
+                stringMaker("*")
             }
             13 -> {
                 changeBool(0)
@@ -232,9 +234,9 @@ class MainActivity : AppCompatActivity(), CustomAdapter.onClick {
         updateFields()
     }
 
-    private fun addToMemory(temp: String){
+    private fun addToMemory(temp: String) {
 
-        data.add(ItemsViewModel ("$operationString=$temp"))
+        data.add(ItemsViewModel("$operationString=$temp"))
 
     }
 
@@ -247,7 +249,7 @@ class MainActivity : AppCompatActivity(), CustomAdapter.onClick {
 
                 changeBool(0)
 
-                if (endsWithSymb()){
+                if (endsWithSymb()) {
 
                     operationString = operationString.dropLast(1)
 
@@ -261,7 +263,8 @@ class MainActivity : AppCompatActivity(), CustomAdapter.onClick {
                 addToMemory(temp)
                 temp
 
-            }else -> {
+            }
+            else -> {
 
                 "$operationString$temp"
             }
@@ -279,7 +282,7 @@ class MainActivity : AppCompatActivity(), CustomAdapter.onClick {
     override fun onItemClick(operation: ItemsViewModel, position: Int) {
         super.onItemClick(operation, position)
 
-        operationString =  StringNumberManager.restoreFromMemory(operation.text)
+        operationString = StringNumberManager.restoreFromMemory(operation.text)
         updateFields()
 
     }
