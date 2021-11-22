@@ -2,6 +2,7 @@ package com.example.myapplication
 
 import android.content.ContentValues
 import android.util.Log
+import com.example.myapplication.databinding.ActivityMainBinding
 
 object StringNumberManager {
 
@@ -52,9 +53,9 @@ object StringNumberManager {
 
     }
 
-    fun restoreFromMemory(a: String){
+    fun restoreFromMemory(a: String): String {
 
-        Log.d(ContentValues.TAG, "onBindViewHolder: $a")
+        return a.substring(a.indexOf('=')+1, a.lastIndex+1)
 
     }
 }

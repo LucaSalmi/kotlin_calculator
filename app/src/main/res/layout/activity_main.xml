@@ -6,21 +6,21 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-<com.google.android.material.textview.MaterialTextView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/operation_view"
-    android:layout_alignParentTop="true"
-    android:layout_marginLeft="5dp"
-    android:layout_marginTop="25dp"
-    android:layout_marginRight="5dp"
-    android:layout_marginBottom="20dp"
-    android:textSize="40sp"
-    android:textAlignment="textEnd"
-    android:background="@drawable/box"
-    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/operation_view"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/box"
+        android:textAlignment="textEnd"
+        android:textSize="40sp">
 
-</com.google.android.material.textview.MaterialTextView>
+    </com.google.android.material.textview.MaterialTextView>
 
 
     <GridLayout
@@ -199,8 +199,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/result_btn"
-        android:layout_marginTop="15dp"
-        ></androidx.recyclerview.widget.RecyclerView>
+        android:layout_marginTop="15dp"></androidx.recyclerview.widget.RecyclerView>
 
 
 </RelativeLayout>

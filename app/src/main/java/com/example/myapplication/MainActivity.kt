@@ -7,133 +7,114 @@ import android.util.Log
 import android.widget.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.myapplication.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), CustomAdapter.onClick {
 
 
     var resultString = ""
     var operationString = ""
-    val numbersArray = mutableListOf<Int>()
-    val symbolArray = mutableListOf<String>()
-    val data = ArrayList<ItemsViewModel>()
+    private val numbersArray = mutableListOf<Int>()
+    private val symbolArray = mutableListOf<String>()
+    private val data = ArrayList<ItemsViewModel>()
     var isSymbol = false
     var erase = false
     var isResult = false
 
+    private lateinit var binding: ActivityMainBinding
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         setFieldsAndListeners()
+
 
     }
 
     private fun setFieldsAndListeners() {
 
-        val opViewer = findViewById<TextView>(R.id.operation_view)
-
-        val plusBtn = findViewById<Button>(R.id.plus_btn)
-        val minusBtn = findViewById<Button>(R.id.minus_btn)
-        val multiplyBtn = findViewById<Button>(R.id.multiply_btn)
-        val divideBtn = findViewById<Button>(R.id.division_btn)
-        val resultBtn = findViewById<Button>(R.id.result_btn)
-
-        val clearBtn = findViewById<Button>(R.id.clear)
-        val eraseBtn = findViewById<Button>(R.id.erase)
-
-        val btnOne = findViewById<Button>(R.id.num_1)
-        val btnTwo = findViewById<Button>(R.id.num_2)
-        val btnThree = findViewById<Button>(R.id.num_3)
-        val btnFour = findViewById<Button>(R.id.num_4)
-        val btnFive = findViewById<Button>(R.id.num_5)
-        val btnSix = findViewById<Button>(R.id.num_6)
-        val btnSeven = findViewById<Button>(R.id.num_7)
-        val btnEight = findViewById<Button>(R.id.num_8)
-        val btnNine = findViewById<Button>(R.id.num_9)
-        val btnZero = findViewById<Button>(R.id.num_0)
-
-        val opMemory = findViewById<RecyclerView>(R.id.memory_layout)
-
-        opMemory.layoutManager = LinearLayoutManager(this)
-        val adapter = CustomAdapter(data)
-        opMemory.adapter = adapter
+        binding.memoryLayout.layoutManager = LinearLayoutManager(this)
+        val adapter = CustomAdapter(data, this)
+        binding.memoryLayout.adapter = adapter
 
 
 
-        btnOne.setOnClickListener {
+        binding.num1.setOnClickListener {
 
-            buttonAction(1, opViewer)
+            buttonAction(1)
         }
-        btnTwo.setOnClickListener {
+        binding.num2.setOnClickListener {
 
-            buttonAction(2, opViewer)
+            buttonAction(2)
         }
-        btnThree.setOnClickListener {
+        binding.num3.setOnClickListener {
 
-            buttonAction(3, opViewer)
+            buttonAction(3)
         }
-        btnFour.setOnClickListener {
+        binding.num4.setOnClickListener {
 
-            buttonAction(4, opViewer)
+            buttonAction(4)
         }
-        btnFive.setOnClickListener {
+        binding.num5.setOnClickListener {
 
-            buttonAction(5, opViewer)
+            buttonAction(5)
         }
-        btnSix.setOnClickListener {
+        binding.num6.setOnClickListener {
 
-            buttonAction(6, opViewer)
+            buttonAction(6)
         }
-        btnSeven.setOnClickListener {
+        binding.num7.setOnClickListener {
 
-            buttonAction(7, opViewer)
+            buttonAction(7)
         }
-        btnEight.setOnClickListener {
+        binding.num8.setOnClickListener {
 
-            buttonAction(8, opViewer)
+            buttonAction(8)
         }
-        btnNine.setOnClickListener {
+        binding.num9.setOnClickListener {
 
-            buttonAction(9, opViewer)
+            buttonAction(9)
         }
-        btnZero.setOnClickListener {
+        binding.num0.setOnClickListener {
 
-            buttonAction(0, opViewer)
+            buttonAction(0)
         }
-        plusBtn.setOnClickListener {
+        binding.plusBtn.setOnClickListener {
 
-            buttonAction(10, opViewer)
+            buttonAction(10)
         }
-        minusBtn.setOnClickListener {
+        binding.minusBtn.setOnClickListener {
 
-            buttonAction(11, opViewer)
+            buttonAction(11)
         }
-        multiplyBtn.setOnClickListener {
+        binding.multiplyBtn.setOnClickListener {
 
-            buttonAction(12, opViewer)
+            buttonAction(12)
         }
-        divideBtn.setOnClickListener {
+        binding.divisionBtn.setOnClickListener {
 
-            buttonAction(13, opViewer)
+            buttonAction(13)
         }
 
-        clearBtn.setOnClickListener {
+        binding.clear.setOnClickListener {
 
             operationString = ""
-            updateFields(opViewer)
+            updateFields()
         }
 
-        eraseBtn.setOnClickListener { buttonAction(15, opViewer) }
+        binding.erase.setOnClickListener { buttonAction(15) }
 
-        resultBtn.setOnClickListener {
+        binding.resultBtn.setOnClickListener {
 
-            resultBtnAction(opViewer)
+            resultBtnAction()
             adapter.notifyDataSetChanged()
         }
     }
 
-    private fun resultBtnAction(view: TextView){
+    private fun resultBtnAction(){
 
         if (endsWithSymb()){
 
@@ -157,8 +138,8 @@ class MainActivity : AppCompatActivity() {
 
             var obj = sendToCalc()
             resultString = obj.result
-            buttonAction(14, view)
-            updateFields(view)
+            buttonAction(14)
+            updateFields()
             arrayCleaner()
 
         }else Toast.makeText(this, "not calculable", Toast.LENGTH_SHORT).show()
@@ -187,43 +168,43 @@ class MainActivity : AppCompatActivity() {
         return (operationString.endsWith('+') || operationString.endsWith('-') || operationString.endsWith('*') || operationString.endsWith('/'))
     }
 
-    private fun buttonAction(symbId: Int, view: TextView) {
+    private fun buttonAction(symbId: Int) {
 
         when (symbId) {
 
-            0 -> stringMaker("0", view)
-            1 -> stringMaker("1", view)
-            2 -> stringMaker("2", view)
-            3 -> stringMaker("3", view)
-            4 -> stringMaker("4", view)
-            5 -> stringMaker("5", view)
-            6 -> stringMaker("6", view)
-            7 -> stringMaker("7", view)
-            8 -> stringMaker("8", view)
-            9 -> stringMaker("9", view)
+            0 -> stringMaker("0")
+            1 -> stringMaker("1")
+            2 -> stringMaker("2")
+            3 -> stringMaker("3")
+            4 -> stringMaker("4")
+            5 -> stringMaker("5")
+            6 -> stringMaker("6")
+            7 -> stringMaker("7")
+            8 -> stringMaker("8")
+            9 -> stringMaker("9")
             10 -> {
                 changeBool(0)
-                stringMaker("+", view)
+                stringMaker("+")
             }
             11 -> {
                 changeBool(0)
-                stringMaker("-", view)
+                stringMaker("-")
             }
             12 -> {
                 changeBool(0)
-                stringMaker ("*", view)
+                stringMaker ("*")
             }
             13 -> {
                 changeBool(0)
-                stringMaker("/", view)
+                stringMaker("/")
             }
             14 -> {
                 changeBool(2)
-                stringMaker(resultString, view)
+                stringMaker(resultString)
             }
             15 -> {
                 changeBool(1)
-                erase(view)
+                erase()
             }
 
         }
@@ -244,11 +225,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun erase(view: TextView) {
+    private fun erase() {
 
         operationString = operationString.dropLast(1)
         changeBool(1)
-        updateFields(view)
+        updateFields()
     }
 
     private fun addToMemory(temp: String){
@@ -257,7 +238,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun stringMaker(temp: String, view: TextView) {
+    private fun stringMaker(temp: String) {
 
 
         operationString = when {
@@ -286,12 +267,20 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        updateFields(view)
+        updateFields()
     }
 
-    private fun updateFields(view: TextView) {
+    private fun updateFields() {
 
-        view.text = operationString
+        binding.operationView.text = operationString
+
+    }
+
+    override fun onItemClick(operation: ItemsViewModel, position: Int) {
+        super.onItemClick(operation, position)
+
+        operationString =  StringNumberManager.restoreFromMemory(operation.text)
+        updateFields()
 
     }
 

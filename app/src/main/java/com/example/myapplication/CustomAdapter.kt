@@ -1,12 +1,16 @@
 package com.example.myapplication
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.example.myapplication.databinding.ActivityMainBinding
 
-class CustomAdapter (private val mList: List<ItemsViewModel>) : RecyclerView.Adapter<CustomAdapter.ViewHolder>() {
+class CustomAdapter(private val mList: List<ItemsViewModel>, var click: onClick) :
+    RecyclerView.Adapter<CustomAdapter.ViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -21,30 +25,39 @@ class CustomAdapter (private val mList: List<ItemsViewModel>) : RecyclerView.Ada
 
         val itemsViewModel = mList[position]
 
-        holder.textView.text = itemsViewModel.text
-
-        holder.itemView.setOnClickListener {
-            
-            StringNumberManager.restoreFromMemory(holder.textView.text.toString())
-
-        }
+        //holder.textView.text = itemsViewModel.text
+        holder.initialize(mList[position], click)
 
     }
 
-
-    // return the number of the items in the list
     override fun getItemCount(): Int {
         return mList.size
     }
 
-    // Holds the views for adding it to image and text
     class ViewHolder(ItemView: View) : RecyclerView.ViewHolder(ItemView) {
 
         val textView: TextView = itemView.findViewById(R.id.textView)
 
+        fun initialize(operation: ItemsViewModel, action: onClick) {
+
+            textView.text = operation.text
+
+            itemView.setOnClickListener {
+
+                action.onItemClick(operation, adapterPosition)
+            }
+        }
+
+
 
     }
 
+    interface onClick{
+
+        fun onItemClick(operation: ItemsViewModel, position: Int){
+
+        }
+    }
 
 
 }
