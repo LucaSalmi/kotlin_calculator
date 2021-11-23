@@ -10,6 +10,7 @@ object StringNumberManager {
         symbolArray: MutableList<String>,
         numbersArray: MutableList<Int>
     ) {
+
 //this loop fills the String array that contains the operation symbols in the order they appear in the string
         var counter = 0
         var operationString = operationString
@@ -46,7 +47,7 @@ object StringNumberManager {
         operationString = "$operationString?"
         counter++
 
-
+// this loop finds the numbers in the string, converts them to Int and puts them in an array in the original order
         while (counter > 0) {
 
             numbersArray.add(operationString.substring(0, operationString.indexOf('?')).toInt())
