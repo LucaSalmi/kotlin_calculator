@@ -34,11 +34,16 @@ object StringNumberManager {
             }
         }
 
-        analysisString = analysisString.replace('+', '?')
-        analysisString = analysisString.replace('-', '?')
-        analysisString = analysisString.replace('*', '?')
-        analysisString = analysisString.replace('/', '?')
+        for (c in analysisString){
+
+            if (c == '+'|| c == '-' || c == '*' || c == '/'){
+
+                analysisString = analysisString.replace('+', '?').replace('-', '?').replace('*', '?').replace('/', '?')
+            }
+        }
+
         analysisString = "$analysisString?"
+
 
         for (c in analysisString) {
 
