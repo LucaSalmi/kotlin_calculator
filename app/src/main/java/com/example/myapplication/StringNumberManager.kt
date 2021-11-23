@@ -1,9 +1,5 @@
 package com.example.myapplication
 
-import android.content.ContentValues
-import android.util.Log
-import com.example.myapplication.databinding.ActivityMainBinding
-
 object StringNumberManager {
 
     /**
@@ -14,11 +10,11 @@ object StringNumberManager {
         symbolArray: MutableList<String>,
         numbersArray: MutableList<Int>
     ) {
-
+//this loop fills the String array that contains the operation symbols in the order they appear in the string
         var counter = 0
-        var analysisString = operationString
+        var operationString = operationString
 
-        for (c in analysisString) {
+        for (c in operationString) {
 
             when (c) {
 
@@ -36,29 +32,25 @@ object StringNumberManager {
                 }
             }
         }
-
-        for (c in analysisString){
+//this replaces all symbols in the string with ?
+        for (c in operationString){
 
             if (c == '+'|| c == '-' || c == '*' || c == '/'){
 
-                analysisString = analysisString.replace('+', '?').replace('-', '?').replace('*', '?').replace('/', '?')
-            }
-        }
-
-        analysisString = "$analysisString?"
-
-
-        for (c in analysisString) {
-
-            if (c == '?') {
+                operationString = operationString.replace('+', '?').replace('-', '?').replace('*', '?').replace('/', '?')
                 counter++
+
             }
         }
+
+        operationString = "$operationString?"
+        counter++
+
 
         while (counter > 0) {
 
-            numbersArray.add(analysisString.substring(0, analysisString.indexOf('?')).toInt())
-            analysisString = analysisString.removeRange(0, (analysisString.indexOf('?') + 1))
+            numbersArray.add(operationString.substring(0, operationString.indexOf('?')).toInt())
+            operationString = operationString.removeRange(0, (operationString.indexOf('?') + 1))
             counter--
 
         }
