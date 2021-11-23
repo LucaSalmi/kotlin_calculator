@@ -6,6 +6,9 @@ import com.example.myapplication.databinding.ActivityMainBinding
 
 object StringNumberManager {
 
+    /**
+     * this method takes the string with the whole operation and extracts the operation symbols and numbers and puts them in two different arrays
+     */
     fun unmakeString(
         operationString: String,
         symbolArray: MutableList<String>,

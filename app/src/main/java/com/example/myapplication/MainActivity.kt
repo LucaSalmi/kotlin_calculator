@@ -31,7 +31,6 @@ class MainActivity : AppCompatActivity(), CustomAdapter.onClick {
 
         setFieldsAndListeners()
 
-
     }
 
     private fun setFieldsAndListeners() {
@@ -114,11 +113,16 @@ class MainActivity : AppCompatActivity(), CustomAdapter.onClick {
         }
     }
 
+    /**
+     * manages what the result button does when pressed.
+     * it checks if the user is trying to use 0 in an operation, if the operation ends with a symbol instead of a number
+     *
+      */
     private fun resultBtnAction() {
 
         if (endsWithSymb()) {
 
-            Toast.makeText(this, "not calculable", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.warning_not_calc), Toast.LENGTH_SHORT).show()
             return
 
         } else "$operationString?"
@@ -128,7 +132,7 @@ class MainActivity : AppCompatActivity(), CustomAdapter.onClick {
 
         if (checkForZeroes()) {
 
-            Toast.makeText(this, "can't operate with zero", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.warning_zero), Toast.LENGTH_SHORT).show()
             arrayCleaner()
             return
 
@@ -142,7 +146,7 @@ class MainActivity : AppCompatActivity(), CustomAdapter.onClick {
             updateFields()
             arrayCleaner()
 
-        } else Toast.makeText(this, "not calculable", Toast.LENGTH_SHORT).show()
+        } else Toast.makeText(this, getString(R.string.warning_not_calc), Toast.LENGTH_SHORT).show()
     }
 
     private fun checkForZeroes(): Boolean {
@@ -240,6 +244,9 @@ class MainActivity : AppCompatActivity(), CustomAdapter.onClick {
 
     }
 
+    /**
+     * modifies the string showed to the user in the operation field of the app
+     */
     private fun stringMaker(temp: String) {
 
 

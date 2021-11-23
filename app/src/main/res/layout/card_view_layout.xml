@@ -3,24 +3,24 @@
     android:layout_width="match_parent"
     android:layout_height="50dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_margin="10dp"
-    app:cardElevation="6dp"
+    android:layout_margin="@dimen/margin_10"
+    app:cardElevation="@dimen/card_elevation"
     android:id="@+id/cardLayout">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="5dp">
+        android:padding="@dimen/margin_5">
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginLeft="15dp"
+            android:layout_marginStart="@dimen/margin_10"
+            android:layout_marginLeft="@dimen/margin_15"
             android:text="Item"
-            android:textSize="20sp"
+            android:textSize="@dimen/list_text_size"
             android:textStyle="bold" />
 
     </LinearLayout>
