@@ -11,6 +11,10 @@ object StringNumberManager {
         numbersArray: MutableList<Int>
     ) {
 
+
+
+
+
 //this loop fills the String array that contains the operation symbols in the order they appear in the string
         var counter = 0
         var operationString = operationString
